@@ -8,17 +8,19 @@ class CommonTextField extends StatelessWidget {
     this.hintText,
     this.maxLines,
     this.readOnly = false,
+    this.color,
   });
   final TextEditingController? controller;
   final String? hintText;
   final int? maxLines;
   final bool readOnly;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppThemeDark.dividerComent,
+        color: color,
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
           color: AppThemeDark.dividerComent,
@@ -36,7 +38,7 @@ class CommonTextField extends StatelessWidget {
         controller: controller,
         decoration: InputDecoration(
           filled: true,
-          fillColor: AppThemeDark.dividerComent,
+          fillColor: color,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,

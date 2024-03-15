@@ -10,9 +10,7 @@ class CategoriesSelection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //final selectedCategory = ref.watch(categoryProvider);
-    final List<TaskCategory> categories = TaskCategory.values.toList();
-
+    final selectedCategory = ref.watch(categoryProvider);
     return SizedBox(
       height: 60,
       child: Row(
@@ -24,15 +22,15 @@ class CategoriesSelection extends ConsumerWidget {
           const Gap(10),
           Expanded(
             child: ListView.separated(
-              itemCount: categories.length,
+              itemCount: selectedCategory.categoria.data!.length,
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (ctx, index) {
-                final category = categories[index];
+                final category = selectedCategory.categoria.data![index];
                 return InkWell(
                   onTap: () {
-                    ref.read(categoryProvider.notifier).state = category;
+                    ref.read(categoryProvider.notifier).state = category as TaskCategory;
                   },
                   borderRadius: BorderRadius.circular(30),
                 );

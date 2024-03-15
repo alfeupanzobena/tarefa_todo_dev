@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:tarefa_todo_dev/config/config.dart';
 import 'package:tarefa_todo_dev/data/data.dart';
+import 'package:tarefa_todo_dev/providers/category_provider.dart';
 import 'package:tarefa_todo_dev/providers/providers.dart';
 import 'package:tarefa_todo_dev/utils/utils.dart';
 import 'package:tarefa_todo_dev/widgets/widgets.dart';
@@ -20,6 +22,10 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen>
     with SingleTickerProviderStateMixin {
   final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _metaUmController = TextEditingController();
+  final TextEditingController _metaDoisController = TextEditingController();
+
+  String _selectedCategory = 'Trabalho';
 
   @override
   void dispose() {
@@ -279,13 +285,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           content: Column(
             children: [
               CommonTextField(
-                hintText: 'Título da tarefa',
+                hintText: 'Nomeie seu período',
+                color: AppThemeDark.dividerComent,
                 controller: _titleController,
               ),
               const SizedBox(height: 20),
               Container(
-                color: AppThemeDark.dividerComent,
                 padding: const EdgeInsets.only(bottom: 20.0),
+                decoration: BoxDecoration(
+                  color: AppThemeDark.dividerComent,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: AppThemeDark.dividerComent,
+                    width: 0.5,
+                  ),
+                ),
                 child: Column(
                   children: [
                     Container(
@@ -302,8 +316,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                               Expanded(
                                 flex: 1,
                                 child: Container(
-                                    height: 40,
-                                    color: Colors.white,
+                                    alignment: Alignment.center,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: Colors.grey.shade400,
+                                        width: 1,
+                                      ),
+                                    ),
                                     child: const StartDateTime()),
                               ),
                             ],
@@ -315,14 +337,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                               thickness: 1,
                             ),
                           ),
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Expanded(flex: 1, child: Text('Termina')),
-                              SizedBox(width: 10.0),
+                              const Expanded(flex: 1, child: Text('Termina')),
+                              const SizedBox(width: 10.0),
                               Expanded(
                                 flex: 1,
-                                child: FinishDateTime(),
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: Colors.grey.shade400,
+                                        width: 1,
+                                      ),
+                                      color: Colors.white,
+                                    ),
+                                    child: const FinishDateTime()),
                               ),
                             ],
                           ),
@@ -339,18 +372,48 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                               const Expanded(child: Text('Categoria')),
                               const SizedBox(width: 10.0),
                               Expanded(
-                                child: DropdownButton<String>(
-                                  items: [
-                                    'Categoria 1',
-                                    'Categoria 2',
-                                    'Categoria 3'
-                                  ].map((String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
-                                  onChanged: (_) {},
+                                child: Container(
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: Colors.grey.shade400,
+                                        width: 1,
+                                      )),
+                                  child: DropdownButtonFormField<String>(
+                                    value: _selectedCategory,
+                                    dropdownColor: Colors.white,
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 16),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        _selectedCategory = newValue!;
+                                      });
+                                    },
+                                    items: [
+                                      'Saúde',
+                                      'Casa',
+                                      'Pessoal',
+                                      'Viagem',
+                                      'Trabalho'
+                                    ].map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          value,
+                                          style: const TextStyle(
+                                              color: Colors.black),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      hintStyle: TextStyle(color: Colors.black),
+                                      contentPadding: EdgeInsets.all(5),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -362,6 +425,62 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 ),
               ),
               const SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Expanded(flex: 3, child: Text('Meta 1')),
+                  const SizedBox(width: 10.0),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: Colors.grey.shade400,
+                          width: 1,
+                        ),
+                        color: Colors.white,
+                      ),
+                      child: CommonTextField(
+                        hintText: 'Um',
+                        color: Colors.white,
+                        controller: _metaUmController,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Expanded(flex: 3, child: Text('Meta 2')),
+                  const SizedBox(width: 10.0),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: Colors.grey.shade400,
+                          width: 1,
+                        ),
+                        color: Colors.white,
+                      ),
+                      child: CommonTextField(
+                        hintText: 'Dois',
+                        color: Colors.white,
+                        controller: _metaDoisController,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 50.0),
               SizedBox(
                 width: 90,
                 child: TextButton(
