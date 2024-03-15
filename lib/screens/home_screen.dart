@@ -39,7 +39,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     return Consumer(
       builder: (context, ref, _) {
         final taskState = ref.watch(tasksProvider);
-        final inCompletedTasks = _incompleteTask(taskState.tasks, ref);
+        final completedTasks = _completeTask(taskState.tasks, ref);
 
         return Scaffold(
           backgroundColor: AppThemeDark.backgroundMensagemColor,
@@ -65,7 +65,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   thickness: 3,
                 ),
                 const SizedBox(height: 20),
-                _buildPeriodsSection(inCompletedTasks),
+                _buildPeriodsSection(completedTasks),
                 const SizedBox(height: 40),
                 _buildLogoutButton(),
               ],
@@ -248,7 +248,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     );
   }
 
-  List<Task> _incompleteTask(List<Task> tasks, WidgetRef ref) {
+  List<Task> _completeTask(List<Task> tasks, WidgetRef ref) {
     final date = ref.watch(dateProvider);
     final List<Task> filteredTask = [];
 
