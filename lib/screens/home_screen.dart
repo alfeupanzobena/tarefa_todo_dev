@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -114,35 +113,41 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         Expanded(
           flex: 1,
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 4),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 2),
             decoration: BoxDecoration(
               color: Colors.grey.shade200,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: ListTile(
-              leading: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: AppThemeDark.dividerComent,
-                    width: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: AppThemeDark.dividerComent,
+                        width: 1,
+                      ),
+                    ),
+                    child: CircleAvatar(
+                      maxRadius: 22,
+                      backgroundColor: AppThemeDark.backgroundMensagemColor,
+                      backgroundImage: const AssetImage('assets/plantando.png'),
+                    ),
                   ),
                 ),
-                child: CircleAvatar(
-                  maxRadius: 20,
-                  backgroundColor: AppThemeDark.backgroundMensagemColor,
-                  backgroundImage: const AssetImage('assets/plantando.png'),
+                Text(
+                  "Editar Foto",
+                  style: TextStyle(
+                    color: AppThemeDark.appBarTextColor,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              title: Text(
-                "Editar Foto",
-                style: TextStyle(
-                  color: AppThemeDark.appBarTextColor,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              ],
             ),
           ),
         ),
@@ -184,7 +189,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         Align(
           alignment: Alignment.centerRight,
           child: SizedBox(
-            width: 150,
+            width: 120,
+            height: 32,
             child: TextButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppThemeDark.textButton,
@@ -194,7 +200,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 "Adicionar Período",
                 style: TextStyle(
                   color: AppThemeDark.backgroundMensagemColor,
-                  fontSize: 15,
+                  fontSize: 12,
                   fontWeight: FontWeight.w600,
                 ),
               ),
