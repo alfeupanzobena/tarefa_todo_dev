@@ -487,6 +487,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   onPressed: () {
                     _createTask();
                     Navigator.of(context).pop();
+                    _titleController.clear();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppThemeDark.textButton,

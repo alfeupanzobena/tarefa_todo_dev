@@ -41,7 +41,7 @@ class TaskTile extends StatelessWidget {
             task.title,
             style: style.titleMedium?.copyWith(
                 fontWeight: fontWeight,
-                fontSize: 18,
+                fontSize: 16,
                 decoration: textDecoration,
                 color: AppThemeDark.primaryTextColor),
           ),
